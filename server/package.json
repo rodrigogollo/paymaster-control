@@ -1,0 +1,49 @@
+{
+  "name": "paymaster-control",
+  "version": "1.0.0",
+  "description": "Paymaster Control is a Professional Services Automation (PSA) platform for comprehensive Resource, Time, and Billing Management.",
+  "main": "src/index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=24.3.0"
+  },
+  "scripts": {
+    "dev": "node --watch ./src/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "PSA",
+    "node",
+    "api",
+    "express",
+    "drizzle"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.9.2",
+    "drizzle-kit": "^0.31.6",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.6"
+  },
+  "dependencies": {
+    "@epic-web/remember": "^1.1.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "custom-env": "^2.0.6",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.44.7",
+    "drizzle-zod": "^0.8.3",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.3",
+    "winston": "^3.18.3",
+    "zod": "^4.1.12"
+  }
+}
