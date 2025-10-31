@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import logger from './services/logger.ts';
-import userRoutes from './routes/users.routes.ts';
 import authRoutes from './routes/auth.routes.ts';
+import apiRoutes from './routes/api.routes.ts';
 
 const app = express();
 
@@ -28,8 +28,8 @@ app.get('/health', (req, res) => {
   })
 })
 
-app.use('/auth', authRoutes)
-app.use('/users', userRoutes)
+app.use('/api/auth', authRoutes)
+app.use('/api/v1', apiRoutes)
 
 export { app };
 export default app;

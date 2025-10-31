@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "node --watch ./src/index.ts",
     "db:generate": "drizzle-kit generate",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env APP_STAGE=test vitest run"
   },
   "keywords": [
     "PSA",
@@ -27,7 +27,10 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.9.2",
+    "@types/supertest": "^6.0.3",
+    "cross-env": "^10.1.0",
     "drizzle-kit": "^0.31.6",
+    "supertest": "^7.1.4",
     "typescript": "^5.9.3",
     "vitest": "^4.0.6"
   },

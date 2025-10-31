@@ -1,9 +1,6 @@
 import { Router } from "express";
-import { authenticateToken } from "../middlewares/auth.ts";
 
 const router = Router();
-
-router.use(authenticateToken)
 
 router.get('/', (req, res) => {
   res.status(200).json({
