@@ -1,7 +1,7 @@
 import { Router } from "express";
 import z from "zod";
 import { validateBody } from "../middlewares/validation.ts";
-import { insertUserSchema } from "../db/schema.ts";
+import { insertUserSchema } from "../db/schema/user.schema.ts";
 import { register, login } from "../controllers/auth.controller.ts";
 
 // const usernameSchema = z.string()

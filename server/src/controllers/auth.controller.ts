@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
 import { db } from "../db/connection.ts";
-import { users, type NewUser } from "../db/schema.ts";
+import { users, type NewUser } from "../db/schema/user.schema.ts";
 import { comparePasswords, hashPassword } from "../services/passwords.ts";
 import { generateToken } from "../services/jwt.ts";
 import { eq } from 'drizzle-orm';
