@@ -5,6 +5,7 @@ import db from '../../src/db/connection.ts';
 import { generateToken } from '../../src/services/jwt.ts';
 import { clients, type NewClient } from '../../src/db/schema/client.schema.ts';
 import { BILLING_TYPE_VALUES, projects, STATUS_VALUES, type NewProject } from '../../src/db/schema/project.schema.ts';
+import { timeEntities, type NewTimeEntity } from '../../src/db/schema/timeEntity.schema.ts';
 
 export async function createTestUser(userData: Partial<NewUser> = {}) {
   const firstName = faker.person.firstName('male')
@@ -101,7 +102,25 @@ export async function createDemoProject(availableClientIds: string[]) {
     .returning()
 
   return project;
+}
 
+export async function createDemoTimeEntity(userIds: string[], projectIds: string[]) {
+  const commonDurations = [2, 3, 4, 5, 6, 7.5, 8];
+
+  const defaultData: NewTimeEntity = {
+    userId: faker.helpers.arrayElement(userIds),
+    projectId: faker.helpers.arrayElement(projectIds),
+    date: faker.date.recent({ days: 365 }),
+    duration: faker.helpers.arrayElement(commonDurations).toString(),
+    notes: faker.lorem.sentence({ min: 3, max: 7 }),
+    isBillable: faker.datatype.boolean(),
+  }
+
+  const [timeEntity] = await db.insert(timeEntities)
+    .values({ ...defaultData })
+    .returning()
+
+  return timeEntity;
 }
 
 export async function cleanupDatabase() {

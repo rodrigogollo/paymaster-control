@@ -4,7 +4,7 @@ import { clients, type NewClient } from "./schema/client.schema.ts";
 import { projects } from "./schema/project.schema.ts";
 import { timeEntities } from "./schema/timeEntity.schema.ts";
 import { users } from "./schema/user.schema.ts";
-import { createDemoClient, createDemoProject, createDemoUserWithoutToken } from '../../tests/setup/dbHelpers.ts';
+import { createDemoClient, createDemoProject, createDemoTimeEntity, createDemoUserWithoutToken } from '../../tests/setup/dbHelpers.ts';
 
 async function seed() {
   logger.info('Starting database seed...')
@@ -17,18 +17,31 @@ async function seed() {
 
     logger.info('Creating Demo users...');
 
-    await createDemoUsers(100);
+    const userIds = await createDemoUsers(100);
 
     logger.info('Creating Demo clients...');
     const clientIds = await createDemoClients(100);
 
     logger.info('Creating Demo projects...');
-    await createDemoProjects(clientIds, 100);
+    const projectIds = await createDemoProjects(clientIds, 100);
+
+    logger.info('Creating demo time entities...');
+    await createDemoTimeEntities(userIds, projectIds)
 
   } catch (e) {
     logger.error('Seed failed', e);
     process.exit(1)
   }
+}
+
+async function createDemoTimeEntities(userIds: string[], projectIds: string[], size = 10) {
+  const timeEntitiesPromises = Array.from({ length: size }).map((entity) => {
+    const entityData = createDemoTimeEntity(userIds, projectIds)
+    return entityData;
+  })
+  const createdEntities = await Promise.all(timeEntitiesPromises);
+  const entityIds = createdEntities.map(entity => entity.id);
+  return entityIds;
 }
 
 async function createDemoProjects(availableClientIds: string[], size = 10) {

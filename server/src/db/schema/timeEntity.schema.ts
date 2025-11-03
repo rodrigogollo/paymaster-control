@@ -22,3 +22,5 @@ export const timeEntitiesrelations = relations(timeEntities, ({ one, many }) => 
     references: [projects.id],
   }),
 }))
+
+export type NewTimeEntity = typeof timeEntities.$inferInsert;
