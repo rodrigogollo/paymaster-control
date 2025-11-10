@@ -1,6 +1,7 @@
 import App from '@/App';
 import DashboardPage from '@/pages/Dashboard';
 import LoginPage from '@/pages/Login';
+import LoginSuccess from '@/pages/LoginSuccess';
 import SignupPage from '@/pages/SignUp';
 import ProtectedRoute from '@/routes/ProtectedRoute';
 import { createBrowserRouter } from 'react-router';
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: '/signup',
     element: <SignupPage />,
+  },
+  {
+    path: '/login-success',
+    element: <LoginSuccess />,
   },
   {
     path: '/',

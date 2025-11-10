@@ -4,4 +4,5 @@ export type User = {
   firstName: string;
   lastName: string;
   role: 'admin' | 'manager' | 'viewer';
+  name: string;
 };
