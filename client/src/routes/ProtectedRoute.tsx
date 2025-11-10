@@ -1,28 +1,28 @@
 import { useAuth } from '@/hooks/useAuth';
 import type { User } from '@/types/user';
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
+import { Navigate } from 'react-router';
 
 type ProtectedRouteProps = PropsWithChildren & {
   allowedRoles?: User['role'][];
 };
 export default function ProtectedRoute({
-  allowedRoles,
+  allowedRoles = ['admin', 'manager', 'viewer'],
   children,
 }: ProtectedRouteProps) {
-  const { currentUser } = useAuth();
+  const { currentUser, authPromise } = useAuth();
 
-  // TODO: Use Suspense or redirect
-  if (currentUser === undefined) {
-    return <div>Loading...</div>;
+  if (authPromise) {
+    throw authPromise;
   }
 
-  // TODO: Redirect instead of rendering
-  if (
-    currentUser === null ||
-    (allowedRoles && !allowedRoles.includes(currentUser.role))
-  ) {
-    return <div>Permission denied</div>;
+  if (currentUser === null) {
+    return <Navigate to='/signin' replace />;
   }
 
-  return children;
+  if (currentUser && allowedRoles && !allowedRoles.includes(currentUser.role)) {
+    return <Navigate to='/' replace />;
+  }
+
+  return <>{children}</>;
 }

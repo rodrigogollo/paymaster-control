@@ -10,12 +10,10 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     if (config.headers['Skip-Auth']) {
-      console.log('headers', config.headers['Skip-Auth']);
       delete config.headers['Skip-Auth'];
       return config;
     }
 
-    console.log('passou');
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

@@ -1,5 +1,6 @@
+import { useAuth } from '@/hooks/useAuth';
 import { Selector } from '@/shared/components/Selector';
-import { Suspense } from 'react';
+import { Link } from 'react-router';
 
 const FRUIT_ITEMS = [
   {
@@ -25,16 +26,18 @@ const FRUIT_ITEMS = [
 ];
 
 export default function HomePage() {
+  const { currentUser } = useAuth();
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <>
       {/* <HomePage /> */}
       <h1>Home Page</h1>
-      {/* <p>{userData?.email}</p> */}
+      <Link to='/users'>Users Page</Link>
+      <p>{currentUser?.email}</p>
       <Selector
         placeholder='Select a fruit'
         label='Fruits'
         items={FRUIT_ITEMS}
       />
-    </Suspense>
+    </>
   );
 }

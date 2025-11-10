@@ -3,5 +3,5 @@ export type User = {
   username: string;
   firstName: string;
   lastName: string;
-  role: 'admin' | 'manager' | 'user';
+  role: 'admin' | 'manager' | 'viewer';
 };
