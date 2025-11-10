@@ -17,11 +17,19 @@ type SelectorProps = {
   placeholder: string;
   label: string;
   items: ItemProps[];
+  value?: string;
+  onValueChange?: (value: string) => void;
 };
 
-export function Selector({ placeholder, label, items }: SelectorProps) {
+export function Selector({
+  placeholder,
+  label,
+  items,
+  value,
+  onValueChange,
+}: SelectorProps) {
   return (
-    <Select>
+    <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger className='w-[180px]'>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
@@ -30,7 +38,9 @@ export function Selector({ placeholder, label, items }: SelectorProps) {
           <SelectLabel>{label}</SelectLabel>
           {items &&
             items.map((item) => (
-              <SelectItem value={item.value}>{item.label}</SelectItem>
+              <SelectItem key={item.label} value={item.value}>
+                {item.label}
+              </SelectItem>
             ))}
         </SelectGroup>
       </SelectContent>

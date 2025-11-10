@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios';
 import api from '@/api/httpClient';
-import type { SignInInputData } from '@/schema/auth.schema';
+import type { SignInInputData, SignUpInputData } from '@/schema/auth.schema';
 
 export const login = async (formData: SignInInputData) => {
   try {
@@ -11,6 +11,21 @@ export const login = async (formData: SignInInputData) => {
   } catch (err) {
     if (isAxiosError(err)) {
       const message = err.response?.data.message || 'Login failed.';
+      throw new Error(message);
+    }
+  }
+};
+
+export const register = async (formData: SignUpInputData) => {
+  try {
+    formData.age = Number(formData.age);
+    const response = await api.post('/auth/register', formData, {
+      headers: { 'Skip-Auth': 'true' },
+    });
+    return response.data;
+  } catch (err) {
+    if (isAxiosError(err)) {
+      const message = err.response?.data.message || 'Registration failed.';
       throw new Error(message);
     }
   }

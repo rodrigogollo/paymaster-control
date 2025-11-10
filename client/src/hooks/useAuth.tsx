@@ -1,4 +1,4 @@
-import type { SignInInputData } from '@/schema/auth.schema';
+import type { SignInInputData, SignUpInputData } from '@/schema/auth.schema';
 import type { User } from '@/types/user';
 import { createContext, useContext } from 'react';
 
@@ -8,6 +8,7 @@ type AuthContext = {
   authPromise?: Promise<void>;
   handleLogin: (formData: SignInInputData) => Promise<void>;
   handleLogout: () => Promise<void>;
+  handleSignUp: (formData: SignUpInputData) => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContext | undefined>(undefined);

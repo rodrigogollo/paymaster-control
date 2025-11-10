@@ -1,7 +1,7 @@
 import { useEffect, useState, type PropsWithChildren } from 'react';
-import { getCurrentUser, login } from '@/hooks/login';
+import { getCurrentUser, login, register } from '@/hooks/login';
 import { AuthContext } from '@/hooks/useAuth';
-import type { SignInInputData } from '@/schema/auth.schema';
+import type { SignInInputData, SignUpInputData } from '@/schema/auth.schema';
 import type { User } from '@/types/user';
 
 type AuthProviderProps = PropsWithChildren;
@@ -11,7 +11,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<User | null>();
   const [authPromise, setAuthPromise] = useState<Promise<void> | undefined>(
     () => {
-      return new Promise((resolve) => setTimeout(resolve, 20));
+      return new Promise((resolve) => setTimeout(resolve, 0));
     }
   );
 
@@ -41,7 +41,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     };
     const promise = checkAuth().then(() => {
       setAuthPromise(undefined);
-      console.log(currentUser);
     });
     setAuthPromise(promise);
   }, []);
@@ -64,7 +63,23 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   // TODO: Make a request for log out (blacklist current token)
   async function handleLogout() {
     setToken(null);
+    // TODO: Maybe unsafe to clear all the preferences
+    localStorage.clear();
     setCurrentUser(null);
+  }
+
+  async function handleSignUp(formData: SignUpInputData) {
+    try {
+      const { token, user } = await register(formData);
+      localStorage.setItem('token', token);
+      setToken(token);
+      //TODO: change role in backend and remove role here
+      setCurrentUser(user);
+    } catch (err) {
+      console.error(err);
+      setToken(null);
+      setCurrentUser(null);
+    }
   }
 
   return (
@@ -75,6 +90,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         authPromise,
         handleLogin,
         handleLogout,
+        handleSignUp,
       }}
     >
       {children}

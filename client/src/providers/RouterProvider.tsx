@@ -1,4 +1,5 @@
 import App from '@/App';
+import DashboardPage from '@/pages/Dashboard';
 import LoginPage from '@/pages/Login';
 import SignupPage from '@/pages/SignUp';
 import ProtectedRoute from '@/routes/ProtectedRoute';
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
     path: '/',
     element: (
       <ProtectedRoute>
-        <App />
+        <DashboardPage />
       </ProtectedRoute>
     ),
   },
