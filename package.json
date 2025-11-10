@@ -4,6 +4,7 @@
   "description": "Paymaster Control is a Professional Services Automation (PSA) platform for comprehensive Resource, Time, and Billing Management.",
   "main": "index.js",
   "scripts": {
+    "dev": "npm run dev --prefix client & npm run dev --prefix server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

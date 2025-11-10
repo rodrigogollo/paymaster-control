@@ -1,6 +1,7 @@
 import { numeric, uuid, pgTable, varchar, timestamp, pgEnum } from "drizzle-orm/pg-core";
 import { clients } from "./client.schema.ts";
 import { relations } from "drizzle-orm";
+import { createSelectSchema, createInsertSchema } from 'drizzle-zod'
 
 export const STATUS_VALUES = ['active', 'on_hold', 'completed'] as const;
 export const statusEnum = pgEnum('status', STATUS_VALUES);
@@ -25,3 +26,4 @@ export const projectsRelations = relations(projects, ({ one }) => ({
 }))
 
 export type NewProject = typeof projects.$inferInsert;
+export const selectProjectSchema = createSelectSchema(projects)

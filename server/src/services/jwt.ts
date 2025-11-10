@@ -1,5 +1,5 @@
 import { createSecretKey } from "crypto";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import env from "../../env.ts";
 
 export interface JwtPayload {
@@ -10,17 +10,17 @@ export interface JwtPayload {
 
 export function generateToken(payload: JwtPayload) {
   const secret = env.JWT_SECRET;
-  const secretKey = createSecretKey(secret, 'utf-8')
+  const secretKey = createSecretKey(secret, "utf-8");
 
   const token = jwt.sign(payload, secretKey, {
-    expiresIn: "1h"
+    expiresIn: "1h",
   });
 
   return token;
 }
 
 export async function verifyToken(token: string): Promise<JwtPayload> {
-  const secretKey = createSecretKey(env.JWT_SECRET, 'utf-8')
+  const secretKey = createSecretKey(env.JWT_SECRET, "utf-8");
 
   const payload = jwt.verify(token, secretKey);
   return payload as JwtPayload;
