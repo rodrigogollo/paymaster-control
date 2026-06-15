@@ -1,5 +1,6 @@
 import { Router } from "express";
 import type { AuthenticatedRequest } from "../middlewares/auth.ts";
+import { getAllUsers } from "../controllers/users.controller.ts";
 
 const router = Router();
 
@@ -7,11 +8,7 @@ router.get("/me", (req: AuthenticatedRequest, res) => {
   res.json(req!.user);
 });
 
-router.get("/", (req, res) => {
-  res.status(200).json({
-    message: "getting users",
-  });
-});
+router.get("/", getAllUsers);
 
 router.get("/:id", (req, res) => {
   res.status(200).json({

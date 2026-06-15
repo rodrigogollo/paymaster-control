@@ -4,8 +4,6 @@ import { users, type NewUser } from "../db/schema/user.schema.ts";
 import { comparePasswords, hashPassword } from "../services/passwords.ts";
 import { generateToken } from "../services/jwt.ts";
 import { eq } from "drizzle-orm";
-import jwt from "jsonwebtoken";
-import env from "../../env.ts";
 
 export async function register(req: Request<any, any, NewUser>, res: Response) {
   try {
@@ -23,13 +21,15 @@ export async function register(req: Request<any, any, NewUser>, res: Response) {
         username: users.username,
         firstName: users.firstName,
         lastName: users.lastName,
+        avatar: users.avatar,
         createdAt: users.createdAt,
       });
 
     const token = generateToken({
       id: user.id,
       email: user.email,
-      username: user.username,
+      name: `${user.firstName} ${user.lastName}`,
+      avatar: user.avatar,
     });
 
     return res.status(201).json({
@@ -65,7 +65,8 @@ export async function login(req: Request, res: Response) {
     const token = generateToken({
       id: user.id,
       email: user.email,
-      name: user.firstName + " " + user.lastName,
+      name: `${user.firstName} ${user.lastName}`,
+      avatar: user.avatar,
     });
 
     return res.status(201).json({
@@ -74,8 +75,7 @@ export async function login(req: Request, res: Response) {
         id: user.id,
         email: user.email,
         username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        name: `${user.firstName} ${user.lastName}`,
         createdAt: user.createdAt,
       },
       token,
@@ -101,6 +101,7 @@ export function verifyCallback(accessToken, refreshToken, profile, done) {
     id: profile.id,
     email: profile.emails?.[0]?.value,
     name: profile.displayName,
+    avatar: profile.picture,
   });
 
   profile.jwt = token;

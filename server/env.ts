@@ -1,4 +1,5 @@
 import { env as loadEnv } from "custom-env";
+// import { loadEnvFile } from "node:process";
 import { z } from "zod";
 import logger from "./src/services/logger.ts";
 
@@ -20,7 +21,7 @@ const envSchema = z.object({
   PORT: z.coerce.number().positive().default(3000),
   DATABASE_URL: z.string().startsWith("postgresql://"),
   JWT_SECRET: z.string().min(32, "Must be 32 chars long"),
-  JWT_EXPIRES_IN: z.string().default("7d"),
+  JWT_EXPIRES_IN: z.coerce.number().default(1 * 60 * 60 * 1000),
   BCRYPT_ROUNDS: z.coerce.number().min(10).max(20).default(12),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),

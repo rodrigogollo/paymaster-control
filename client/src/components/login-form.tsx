@@ -20,7 +20,6 @@ import { useNavigate } from 'react-router';
 import type { SignInInputData } from '@/schema/auth.schema';
 import { toast, Toaster } from 'sonner';
 import { useAuth } from '@/hooks/useAuth';
-import { api } from '@/api/httpClient';
 
 export function LoginForm({
   className,
@@ -46,7 +45,7 @@ export function LoginForm({
     toast.promise(handleLogin(data), {
       loading: 'Logging in...',
       success: () => {
-        navigate('/');
+        navigate('/dashboard');
         return 'Login sucessful!';
       },
       error: (err) => {
@@ -80,7 +79,7 @@ export function LoginForm({
               <FieldGroup>
                 <Field>
                   <Button
-                    onClick={handleGoogleLogin}
+                    onMouseDown={handleGoogleLogin}
                     variant='outline'
                     type='button'
                   >

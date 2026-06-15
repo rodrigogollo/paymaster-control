@@ -2,13 +2,13 @@ import { useEffect, useState, type PropsWithChildren } from 'react';
 import { getCurrentUser, login, register } from '@/hooks/login';
 import { AuthContext } from '@/hooks/useAuth';
 import type { SignInInputData, SignUpInputData } from '@/schema/auth.schema';
-import type { User } from '@/types/user';
+import type { CurrentUser } from '@/types/user';
 
 type AuthProviderProps = PropsWithChildren;
 
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [token, setToken] = useState<string | null>();
-  const [currentUser, setCurrentUser] = useState<User | null>();
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>();
   const [authPromise, setAuthPromise] = useState<Promise<void> | undefined>(
     () => {
       return new Promise((resolve) => setTimeout(resolve, 0));

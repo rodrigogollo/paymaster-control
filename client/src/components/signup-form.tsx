@@ -91,8 +91,8 @@ export function SignupForm({
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FieldGroup>
-              <Field className='grid grid-cols-2 gap-4'>
-                <Field>
+              <Field className='grid grid-cols-5 gap-2'>
+                <Field className='col-span-2'>
                   <FieldLabel htmlFor='first-name'>First Name</FieldLabel>
                   <Input
                     id='first-name'
@@ -103,7 +103,7 @@ export function SignupForm({
                   />
                   <p>{errors.firstName?.message}</p>
                 </Field>
-                <Field>
+                <Field className='col-span-2'>
                   <FieldLabel htmlFor='last-name'>Last Name</FieldLabel>
                   <Input
                     id='last-name'
@@ -114,29 +114,50 @@ export function SignupForm({
                   />
                   <p>{errors.lastName?.message}</p>
                 </Field>
+                <Field>
+                  <FieldLabel htmlFor='age'>Age</FieldLabel>
+                  <Input
+                    id='age'
+                    type='number'
+                    min={16}
+                    max={90}
+                    required
+                    {...register('age', { required: true })}
+                  />
+                  <p>{errors.lastName?.message}</p>
+                </Field>
               </Field>
-              <Field>
-                <FieldLabel htmlFor='age'>Age</FieldLabel>
-                <Input
-                  id='age'
-                  type='number'
-                  min={16}
-                  max={90}
-                  required
-                  {...register('age', { required: true })}
-                />
-                <p>{errors.lastName?.message}</p>
-              </Field>
-              <Field>
-                <FieldLabel htmlFor='email'>Email</FieldLabel>
-                <Input
-                  id='email'
-                  type='email'
-                  placeholder='john@doe.com'
-                  required
-                  {...register('email', { required: true })}
-                />
-                <p>{errors.email?.message}</p>
+              <Field className='grid grid-cols-4 gap-2'>
+                <Field className='col-span-3'>
+                  <FieldLabel htmlFor='email'>Email</FieldLabel>
+                  <Input
+                    id='email'
+                    type='email'
+                    placeholder='john@doe.com'
+                    required
+                    {...register('email', { required: true })}
+                  />
+                  <p>{errors.email?.message}</p>
+                </Field>
+
+                <Field className='col-span-1'>
+                  <FieldLabel htmlFor='role'>Role</FieldLabel>
+                  <Controller
+                    name='role'
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Selector
+                        placeholder='Select a role'
+                        label='Roles'
+                        items={roles}
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      />
+                    )}
+                  />
+                  <p>{errors.role?.message}</p>
+                </Field>
               </Field>
               <Field>
                 <FieldLabel htmlFor='username'>Username</FieldLabel>
@@ -172,24 +193,6 @@ export function SignupForm({
                 {/* <FieldDescription> */}
                 {/*   Must be at least 8 characters long. */}
                 {/* </FieldDescription> */}
-              </Field>
-              <Field>
-                <FieldLabel htmlFor='role'>Role</FieldLabel>
-                <Controller
-                  name='role'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Selector
-                      placeholder='Select a role'
-                      label='Roles'
-                      items={roles}
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    />
-                  )}
-                />
-                <p>{errors.role?.message}</p>
               </Field>
               <Field>
                 <Button type='submit'>Create Account</Button>

@@ -3,15 +3,17 @@
 import * as React from 'react';
 import {
   AudioWaveform,
-  BookOpen,
-  Bot,
+  CalendarClock,
   Command,
+  Factory,
   Frame,
   GalleryVerticalEnd,
+  LayoutDashboard,
   Map,
   PieChart,
   Settings2,
-  SquareTerminal,
+  SquareChartGantt,
+  Users,
 } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
@@ -27,16 +29,15 @@ import {
 } from '@/components/ui/sidebar';
 import { useAuth } from '@/hooks/useAuth';
 
-// This is sample data.
 const data = {
   user: {
-    name: 'shadcn',
-    email: 'm@example.com',
+    name: 'User',
+    email: 'uer@example.com',
     avatar: '/avatars/shadcn.jpg',
   },
   teams: [
     {
-      name: 'Acme Inc',
+      name: 'Paymaster Control Inc.',
       logo: GalleryVerticalEnd,
       plan: 'Enterprise',
     },
@@ -53,67 +54,47 @@ const data = {
   ],
   navMain: [
     {
-      title: 'Playground',
-      url: '#',
-      icon: SquareTerminal,
+      title: 'Dashboard',
+      url: '/',
+      icon: LayoutDashboard,
       isActive: true,
       items: [
         {
-          title: 'History',
-          url: '#',
-        },
-        {
-          title: 'Starred',
-          url: '#',
-        },
-        {
-          title: 'Settings',
-          url: '#',
+          title: 'General',
+          url: '/',
         },
       ],
     },
     {
-      title: 'Models',
-      url: '#',
-      icon: Bot,
+      title: 'Employees',
+      url: '/',
+      icon: Users,
       items: [
         {
-          title: 'Genesis',
-          url: '#',
-        },
-        {
-          title: 'Explorer',
-          url: '#',
-        },
-        {
-          title: 'Quantum',
-          url: '#',
+          title: 'General',
+          url: '/users',
         },
       ],
     },
     {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
-      items: [
-        {
-          title: 'Introduction',
-          url: '#',
-        },
-        {
-          title: 'Get Started',
-          url: '#',
-        },
-        {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
-          url: '#',
-        },
-      ],
+      title: 'Projects',
+      url: '/projects',
+      icon: SquareChartGantt,
+      items: [],
     },
+    {
+      title: 'Clients',
+      url: '/clients',
+      icon: Factory,
+      items: [],
+    },
+    {
+      title: 'Time Entries',
+      url: '/time-entries',
+      icon: CalendarClock,
+      items: [],
+    },
+
     {
       title: 'Settings',
       url: '#',
@@ -140,34 +121,46 @@ const data = {
   ],
   projects: [
     {
-      name: 'Design Engineering',
-      url: '#',
-      icon: Frame,
+      name: 'Employees',
+      url: '/users',
+      icon: Users,
     },
     {
-      name: 'Sales & Marketing',
-      url: '#',
-      icon: PieChart,
+      name: 'Projects',
+      url: '/projects',
+      icon: SquareChartGantt,
     },
     {
-      name: 'Travel',
-      url: '#',
-      icon: Map,
+      name: 'Clients',
+      url: '/clients',
+      icon: Factory,
+    },
+    {
+      name: 'Time Entries',
+      url: '/time-entries',
+      icon: CalendarClock,
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { currentUser } = useAuth();
-  data.user.name = currentUser?.name || 'User';
-  data.user.email = currentUser?.email || '';
+
+  if (currentUser) {
+    data.user = currentUser;
+    data.user.name =
+      currentUser.name ||
+      currentUser.firstName + ' ' + currentUser.lastName ||
+      'User';
+  }
+
   return (
     <Sidebar collapsible='icon' {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        {/* <NavMain items={data.navMain} /> */}
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>

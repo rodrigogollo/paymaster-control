@@ -24,6 +24,7 @@ export async function createTestUser(userData: Partial<NewUser> = {}) {
     username: faker.internet.username({ firstName, lastName }),
     password: faker.internet.password({ length: 5 }),
     age: faker.number.int({ min: 18, max: 65 }),
+    avatar: faker.image.avatar(),
     firstName,
     lastName,
     ...userData,
@@ -41,7 +42,8 @@ export async function createTestUser(userData: Partial<NewUser> = {}) {
   const token = generateToken({
     id: user.id,
     email: user.email,
-    name: user.firstName + " " + user.lastName,
+    name: `${user.firstName} ${user.lastName}`,
+    avatar: user.avatar,
   });
 
   return {
@@ -60,6 +62,7 @@ export async function createDemoUserWithoutToken() {
     username: faker.internet.username({ firstName, lastName }),
     password: faker.internet.password({ length: 5 }),
     age: faker.number.int({ min: 18, max: 65 }),
+    avatar: faker.image.avatar(),
     firstName,
     lastName,
   };

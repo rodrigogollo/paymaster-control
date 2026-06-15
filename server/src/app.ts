@@ -6,12 +6,11 @@ import authRoutes from "./routes/auth.routes.ts";
 import apiRoutes from "./routes/api.routes.ts";
 import { Strategy } from "passport-google-oauth2";
 import passport from "passport";
-import cookieSession from "cookie-session";
 import { verifyCallback } from "./controllers/auth.controller.ts";
 import type { User } from "./db/schema/user.schema.ts";
+import env from "../env.ts";
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, COOKIE_KEY_1, COOKIE_KEY_2 } =
-  process.env;
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = env;
 
 const AUTH_OPTIONS = {
   callbackURL: "http://localhost:3000/api/v1/auth/google/callback",
@@ -23,7 +22,7 @@ passport.serializeUser((user: User, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser((id: Pick<User, "id">, done) => {
   done(null, id);
 });
 

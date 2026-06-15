@@ -1,10 +1,10 @@
 import type { SignInInputData, SignUpInputData } from '@/schema/auth.schema';
-import type { User } from '@/types/user';
+import type { CurrentUser } from '@/types/user';
 import { createContext, useContext } from 'react';
 
 type AuthContext = {
   token?: string | null;
-  currentUser?: User | null;
+  currentUser?: CurrentUser | null;
   authPromise?: Promise<void>;
   handleLogin: (formData: SignInInputData) => Promise<void>;
   handleLogout: () => Promise<void>;

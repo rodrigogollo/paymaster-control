@@ -37,6 +37,23 @@ export function NavUser({
   const { isMobile } = useSidebar();
   const { handleLogout } = useAuth();
 
+  function deriveUserAvatarFallback() {
+    const fullname = user.name.split(' ');
+    let fallback;
+    if (fullname.length > 1) {
+      const firstName = user.name.split(' ')[0];
+      const lastName = user.name.split(' ')[1];
+      fallback =
+        firstName.slice(0, 1).toUpperCase() +
+        lastName.slice(0, 1).toUpperCase();
+    } else {
+      fallback = user.name.slice(0, 2).toUpperCase();
+    }
+    return fallback;
+  }
+
+  const avatarFallback = deriveUserAvatarFallback();
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -48,7 +65,9 @@ export function NavUser({
             >
               <Avatar className='h-8 w-8 rounded-lg'>
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
+                <AvatarFallback className='rounded-lg'>
+                  {avatarFallback}
+                </AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
                 <span className='truncate font-medium'>{user.name}</span>

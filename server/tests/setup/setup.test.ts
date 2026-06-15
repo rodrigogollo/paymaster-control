@@ -1,10 +1,10 @@
-import { cleanupDatabase, createTestUser } from "./dbHelpers"
+import { cleanupDatabase, createTestUser } from "./dbHelpers.ts";
 
-describe('Test setup', () => {
-  it('should connect to the test db', async () => {
-    const { user, token } = await createTestUser()
+describe("Test setup", () => {
+  it("should connect to the test db", async () => {
+    const { user, token } = await createTestUser();
 
-    expect(user).toBeDefined()
-    await cleanupDatabase()
-  })
-})
+    expect(user).toBeDefined();
+    await cleanupDatabase();
+  });
+});
