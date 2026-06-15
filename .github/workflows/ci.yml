@@ -55,6 +55,12 @@ jobs:
           DATABASE_URL: postgresql://paymaster:paymaster@localhost:5432/paymaster
           NODE_ENV: test
           APP_STAGE: test
+          JWT_SECRET: my_super_secret_jwt_key_here_lol_test
+          JWT_EXPIRES_IN: "28800000"
+          GOOGLE_CLIENT_ID: google_client_test
+          GOOGLE_CLIENT_SECRET: google_secret_test
+          COOKIE_KEY_1: secretkey_paymaster_test
+          COOKIE_KEY_2: secretkeyforrotation_paymaster_test
       - name: Run tests
         run: npm run test
         working-directory: server
