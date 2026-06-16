@@ -1,3 +1,4 @@
+import { useAuth } from '@/hooks/useAuth';
 import {
   CheckCircle2,
   ArrowRight,
@@ -9,7 +10,8 @@ import {
   Code2,
   LayoutTemplate,
 } from 'lucide-react';
-import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router';
 
 // --- UI Components (Simulating Shadcn/ui) ---
 
