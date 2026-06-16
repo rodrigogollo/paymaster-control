@@ -96,7 +96,29 @@ export function checkLoggedInGoogle(req, res, next) {
   next();
 }
 
-export function verifyCallback(accessToken, refreshToken, profile, done) {
+export async function verifyCallback(accessToken, refreshToken, profile, done) {
+  const email = profile.emails?.[0]?.value;
+  if (!email) return done(new Error("No email from Google"));
+
+  let user = await db.query.users.findFirst({
+    where: eq(users.email, email),
+  });
+
+  if (!user) {
+    [user] = await db
+      .insert(users)
+      .values({
+        email,
+        username: email.split("@")[0],
+        password: "",
+        firstName: profile.name?.givenName,
+        lastName: profile.name?.familyName,
+        avatar: profile.photos?.[0]?.value,
+        age: 0,
+      })
+      .returning();
+  }
+
   const token = generateToken({
     id: profile.id,
     email: profile.emails?.[0]?.value,

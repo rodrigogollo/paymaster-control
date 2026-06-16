@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { AuthenticatedRequest } from "../middlewares/auth.ts";
-import { getAllUsers } from "../controllers/users.controller.ts";
+import { getAllUsers, getUserById } from "../controllers/users.controller.ts";
 
 const router = Router();
 
@@ -9,12 +9,7 @@ router.get("/me", (req: AuthenticatedRequest, res) => {
 });
 
 router.get("/", getAllUsers);
-
-router.get("/:id", (req, res) => {
-  res.status(200).json({
-    message: "getting user by id",
-  });
-});
+router.get("/:id", getUserById);
 
 router.post("/", (req, res) => {
   res.status(200).json({
