@@ -46,6 +46,7 @@ export async function getUserById(req: Request, res: Response) {
   }
 }
 
+// only used for admin user creation
 export async function createUser(req: Request, res: Response) {
   try {
     const { email, username, password } = req.body;
